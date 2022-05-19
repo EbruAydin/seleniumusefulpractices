@@ -1,5 +1,20 @@
 package elifhocapractice;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+
 public class Q04_interview {
     /*
     ...Exercise4...
@@ -39,4 +54,53 @@ public class Q04_interview {
             Örnek:
             js.executeScript("window.scrollBy(0,1000)"); // Dikey olarak 1000 piksel aşağı kaydır
      */
+    static WebDriver driver;
+
+    @BeforeClass
+    public static void setUp() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+        driver.get(" https://www.teknosa.com/");
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        //    driver i kapatiniz
+        driver.close();
+    }
+
+    @Test
+    public void test01() {
+
+        // arama cubuguna oppo yazip enter deyiniz
+        driver.findElement(By.id("search-input")).sendKeys("oppo" + Keys.ENTER);
+
+        //    sonuc sayisini yazdiriniz
+        WebElement result=driver.findElement(By.xpath("//*[@class='plp-info']"));
+        String resulttext[]=result.getText().split(" ");
+        //System.out.println(Arrays.toString(resulttext));
+        System.out.println("Arama sonucu : " + Arrays.stream(resulttext).findFirst().orElseThrow());
+
+        //    cikan ilk urune tiklayiniz
+         driver.findElement(By.xpath("(//a[@class='prd-link'])[1]")).click();
+
+         //    sepete ekleyiniz
+        driver.findElement(By.xpath("//button[@id='addToCartButton']")).click();
+
+        //    sepetime git e tiklayiniz
+        driver.findElement(By.xpath("//a[@class='btn btn-secondary']")).click();
+
+        //    consol da "Sipariş Özeti" webelementinin text ini yazidiriniz
+        System.out.println(driver.findElement(By.xpath("//div[@class='cart-sum-body']")).getText());
+
+        //    Alisverisi tamamlayiniz
+        driver.findElement(By.xpath("//a[@type='button']")).click();
+
+
+        //    son alarak da "Teknosa'ya hoş geldiniz"  webelementinin text ini yazidiriniz
+        System.out.println(driver.findElement(By.xpath("//*[text()='Teknosa’ya hoş geldiniz']")).getText());
+
+    }
 }
