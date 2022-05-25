@@ -1,4 +1,4 @@
-package elifhocapractice;
+package elifhocapractice.practice;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.AfterClass;
@@ -14,7 +14,6 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class Q6 {
     /*

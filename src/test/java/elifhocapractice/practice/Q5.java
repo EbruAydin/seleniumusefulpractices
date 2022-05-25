@@ -1,4 +1,4 @@
-package elifhocapractice;
+package elifhocapractice.practice;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.AfterClass;
