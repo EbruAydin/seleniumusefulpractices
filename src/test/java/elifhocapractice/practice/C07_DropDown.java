@@ -3,17 +3,9 @@ package elifhocapractice.practice;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.TestBaseClass;
-import utilities.TestCase;
 
-import java.time.Duration;
 import java.util.List;
 
 public class C07_DropDown extends TestBaseClass {
@@ -44,57 +36,89 @@ public class C07_DropDown extends TestBaseClass {
 
 
         //-->Task4 choose dropdown elements and printout dropdown elements' name  until choise 6
-        Actions action = new Actions(driver);
         List<WebElement> dropDownElementsButton = driver.findElements(By.xpath("//div[@class='comboTreeWrapper']"));
-        //List<WebElement> dropdownSection = driver.findElements(By.xpath("//*[@class='comboTreeItemTitle']"));
         List<WebElement> dropdownSection = driver.findElements(By.xpath("//span[@class='comboTreeItemTitle']"));
-        //List<WebElement> dropdownSection = driver.findElements(By.xpath("//input[@type='checkbox']"));
         System.out.println(dropdownSection.size());
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
         JavascriptExecutor jse = (JavascriptExecutor) driver;
 
-        for (int i = 0; i < dropdownSection.size(); i++) {
+        List<WebElement> checkbox=driver.findElements(By.xpath("//input[@type='checkbox']"));
+        List<WebElement> liste = driver.findElements(By.xpath("((//div[@class='comboTreeDropDownContainer'])[1]//ul)[1]//li"));
 
-            //if (dropDownElements.get(0).isDisplayed()) {
-            action.click(dropDownElementsButton.get(0)).perform();
+        if(dropDownElements.get(0).isDisplayed()) {
+            dropDownElementsButton.get(0).click();
             System.out.println(dropDownElements.get(0).getText());
-            do {
-                dropdownSection.get(i).click();
-                System.out.println(dropdownSection.get(i).getText());
-                i++;
-            } while (!dropdownSection.get(i).getText().equals("choice 6"));
-            System.out.println(i);//8'e denk geliyor
-            //}
+            for (int i = 0 ; i < 8; i++) {
+                    checkbox.get(i).click();
+                    System.out.println(liste.get(i).getText());
+            }
+        }
 
-
-            // if (dropDownElements.get(1).isDisplayed()) {
-            action.click(dropDownElementsButton.get(1)).perform();
+        System.out.println("=============================");
+        List<WebElement> liste1 = driver.findElements(By.xpath("((//div[@class='comboTreeDropDownContainer'])[2]//ul)[1]//li"));
+        if(dropDownElements.get(1).isDisplayed()) {
+            dropDownElementsButton.get(1).click();
             System.out.println(dropDownElements.get(1).getText());
+            for (int i = 0; i < 8; i++) {
+                jse.executeScript("arguments[0].click();",  checkbox.get(i));
+                System.out.println(liste1.get(i).getText());
+            }
+        }
 
-            do {
-                //WebElement tr1= wait.until(ExpectedConditions.elementToBeClickable(dropdownSection.get(i+7)));
-                //tr1.click();
-                //dropdownSection.get(i+7).click();
-                jse.executeScript("arguments[0].scrollIntoView(true);", dropdownSection.get(i));
-                jse.executeScript("arguments[0].click();", dropdownSection.get(i));
-                System.out.println(dropdownSection.get(i).getText());
-                i++;
-            } while (!dropdownSection.get(i).getText().equals("choice 6"));
-            // }
+        System.out.println("=============================");
+        dropDownElementsButton.get(2).click();
+        System.out.println(dropDownElements.get(2).getText());
+        List<WebElement> liste2 = driver.findElements(By.xpath("((//div[@class='comboTreeDropDownContainer'])[3]//ul)[1]//li"));
 
-            action.click(dropDownElementsButton.get(2)).perform();
-            System.out.println(dropDownElements.get(2).getText());
-
-            do {
-                dropdownSection.get(i).click();
-                jse.executeScript("arguments[0].scrollIntoView(true);", dropdownSection.get(i));
-                jse.executeScript("arguments[0].click();", dropdownSection.get(i));
-                System.out.println(dropdownSection.get(i).getText());
-                i++;
-            } while (!dropdownSection.get(i).getText().equals("choice 6"));
+        for (int i = 0; i < 8; i++) {
+            jse.executeScript("arguments[0].scrollIntoView(true);", liste2.get(i));
+            jse.executeScript("arguments[0].click();", liste2.get(i));
+            System.out.println(liste2.get(i).getText());
         }
     }
 }
+
+//diger cozum yolu
+/*List<WebElement> liste = driver.findElements(By.xpath("((//div[@class='comboTreeDropDownContainer'])[1]//ul)[1]//li"));
+
+        for (int i = 0; i < 8; i++) {
+            liste.get(i).click();
+            System.out.println(liste.get(i).getText());
+        }
+
+
+        /*
+        for (WebElement each:liste) {
+                each.click();
+                System.out.println(each.getText());
+        }
+
+
+
+        System.out.println("=============================");
+                dropDownElementsButton.get(1).click();
+                System.out.println(dropDownElements.get(1).getText());
+                List<WebElement> liste1 = driver.findElements(By.xpath("((//div[@class='comboTreeDropDownContainer'])[2]//ul)[1]//li"));
+
+        for (int i = 0; i < 8; i++) {
+        jse.executeScript("arguments[0].click();", liste1.get(i));
+        System.out.println(liste1.get(i).getText());
+        }
+
+        System.out.println("=============================");
+        dropDownElementsButton.get(2).click();
+        System.out.println(dropDownElements.get(2).getText());
+        List<WebElement> liste2 = driver.findElements(By.xpath("((//div[@class='comboTreeDropDownContainer'])[3]//ul)[1]//li"));
+
+        for (int i = 0; i < 8; i++) {
+        jse.executeScript("arguments[0].scrollIntoView(true);", liste2.get(i));
+        jse.executeScript("arguments[0].click();", liste2.get(i));
+        System.out.println(liste2.get(i).getText());
+        }
+
+ */
+
+
 
 
 
