@@ -1,0 +1,9 @@
+/*
+        WebElement itsGoneYaziElementi= driver.findElement(By.xpath("//p[text()=\"It's gone!\"]"));
+        wait.until(ExpectedConditions.visibilityOf(itsGoneYaziElementi));
+        Assert.assertTrue(itsGoneYaziElementi.isDisplayed());
+        yazinin gorunur olmasini beklerken yazinin locate'ini kullanmak sorun olusturur
+        cunku henuz gorunmeyen bir yazinin locate edilmesi de mumkun olmayabilir
+        (HTML kodlari yazan developer farkli uygulamalar yapablir)
+        Bu durumda bekleme islemi ve locate'i birlikte yapmaliyiz
+        */
